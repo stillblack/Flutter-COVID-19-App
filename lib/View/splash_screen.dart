@@ -17,6 +17,12 @@ class _SplashScreenState extends State<SplashScreen>
       AnimationController(duration: const Duration(seconds: 3), vsync: this)
         ..repeat();
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -41,8 +47,7 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 200,
                     width: 200,
                     child: const Center(
-                        child: Image(
-                            image: AssetImage('assets/images/virus.png')))),
+                        child: Image(image: AssetImage('images/virus.png')))),
                 builder: (BuildContext context, Widget? child) {
                   return Transform.rotate(
                     angle: _controller.value * 2 * math.pi,
@@ -50,11 +55,16 @@ class _SplashScreenState extends State<SplashScreen>
                   );
                 }),
             SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-            Align(
+            const Align(
               alignment: Alignment.center,
               child: Text(
                 'Covid-19\n Tracker App',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  // color: Colors.lightBlueAccent
+                ),
               ),
             ),
           ],
