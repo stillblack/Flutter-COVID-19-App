@@ -29,16 +29,23 @@ class _WorldStateScreenState extends State<WorldStateScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * .01,
-          ),
-          PieChart(dataMap: const {
-            "Total": 20,
-            "Recoverd": 15,
-            "Deaths": 5,
-          }),
-        ]),
+        child: Center(
+          child: Column(children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .01,
+            ),
+            PieChart(
+              dataMap: const {
+                "Total": 20,
+                "Recoverd": 15,
+                "Deaths": 5,
+              },
+              animationDuration: const Duration(milliseconds: 1200),
+              chartType: ChartType.ring,
+              colorList: colorList,
+            ),
+          ]),
+        ),
       ),
     );
   }
