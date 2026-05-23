@@ -47,7 +47,7 @@ class _WorldStateScreenState extends State<WorldStateScreen>
                     const LegendOptions(legendPosition: LegendPosition.left),
                 animationDuration: const Duration(milliseconds: 1200),
                 chartType: ChartType.ring,
-                // colorList: colorList,
+                colorList: colorList,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
