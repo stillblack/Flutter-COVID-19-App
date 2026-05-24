@@ -1,4 +1,7 @@
+import 'package:covid_tracker/Model/world_states_model.dart';
+import 'package:covid_tracker/Services/States_Services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class WorldStateScreen extends StatefulWidget {
@@ -27,6 +30,7 @@ class _WorldStateScreenState extends State<WorldStateScreen>
 
   @override
   Widget build(BuildContext context) {
+    StatesServices statesServices = StatesServices();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -36,6 +40,58 @@ class _WorldStateScreenState extends State<WorldStateScreen>
               SizedBox(
                 height: MediaQuery.of(context).size.height * .01,
               ),
+              FutureBuilder(
+                  future: statesServices.fetchWorldStatesRecords(),
+                  builder: (context, AsyncSnapshot<WorldStatesModel> snapshot) {
+                    if (snapshot.hasData) {
+                      return Expanded(
+                        flex: 1,
+                        child: SpinKitFadingCircle(
+                          color: Colors.white,
+                          size: 50.0,
+                          controller: _controller,
+                        ),
+                      );
+                    } else {
+                      return Column(children: [
+                        PieChart(
+                          dataMap: const {
+                            "Total": 20,
+                            "Recoverd": 15,
+                            "Deaths": 5,
+                          },
+                          chartRadius: MediaQuery.of(context).size.width / 3.2,
+                          legendOptions: const LegendOptions(
+                              legendPosition: LegendPosition.left),
+                          animationDuration: const Duration(milliseconds: 1200),
+                          chartType: ChartType.ring,
+                          colorList: colorList,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).size.height * 0.06),
+                          child: const Card(
+                            child: Column(
+                              children: [
+                                ReuseAbleRow(title: "Total", value: '200'),
+                                ReuseAbleRow(title: "Recoverd", value: "15"),
+                                ReuseAbleRow(title: "Deaths", value: "5")
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Center(
+                              child: Center(child: Text('Track Countries'))),
+                        )
+                      ]);
+                    }
+                  }),
               PieChart(
                 dataMap: const {
                   "Total": 20,
