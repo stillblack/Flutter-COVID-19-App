@@ -1,5 +1,6 @@
 import 'package:covid_tracker/Model/world_states_model.dart';
 import 'package:covid_tracker/Services/States_Services.dart';
+import 'package:covid_tracker/View/countries_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -55,11 +56,17 @@ class _WorldStateScreenState extends State<WorldStateScreen>
                     } else {
                       return Column(children: [
                         PieChart(
-                          dataMap: const {
-                            "Total": 20,
-                            "Recoverd": 15,
-                            "Deaths": 5,
+                          dataMap: {
+                            "Total":
+                                double.parse(snapshot.data!.cases!.toString()),
+                            "Recoverd": double.parse(
+                                snapshot.data!.recovered!.toString()),
+                            "Deaths":
+                                double.parse(snapshot.data!.deaths!.toString()),
                           },
+                          chartValuesOptions: const ChartValuesOptions(
+                            showChartValuesInPercentage: true,
+                          ),
                           chartRadius: MediaQuery.of(context).size.width / 3.2,
                           legendOptions: const LegendOptions(
                               legendPosition: LegendPosition.left),
@@ -71,12 +78,21 @@ class _WorldStateScreenState extends State<WorldStateScreen>
                           padding: EdgeInsets.symmetric(
                               vertical:
                                   MediaQuery.of(context).size.height * 0.06),
-                          child: const Card(
+                          child: Card(
                             child: Column(
                               children: [
-                                ReuseAbleRow(title: "Total", value: '200'),
-                                ReuseAbleRow(title: "Recoverd", value: "15"),
-                                ReuseAbleRow(title: "Deaths", value: "5")
+                                ReuseAbleRow(
+                                  title: "Total",
+                                  value: snapshot.data!.cases.toString(),
+                                ),
+                                ReuseAbleRow(
+                                  title: "Recoverd",
+                                  value: snapshot.data!.recovered.toString(),
+                                ),
+                                ReuseAbleRow(
+                                  title: "Deaths",
+                                  value: snapshot.data!.deaths.toString(),
+                                )
                               ],
                             ),
                           ),
@@ -118,13 +134,21 @@ class _WorldStateScreenState extends State<WorldStateScreen>
                   ),
                 ),
               ),
-              Container(
-                height: 50,
-                decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(10)),
-                child:
-                    const Center(child: Center(child: Text('Track Countries'))),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CountriesListScreen()));
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const Center(
+                      child: Center(child: Text('Track Countries'))),
+                ),
               )
             ],
           ),
