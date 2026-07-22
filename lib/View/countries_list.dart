@@ -1,5 +1,6 @@
 // import 'package:covid19app/Services/states_services.dart';
 import 'package:covid_tracker/Services/States_Services.dart';
+import 'package:covid_tracker/View/details_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -98,15 +99,44 @@ class _CountriesListScreenState extends State<CountriesListScreen> {
                           print(countryData);
                           return Column(
                             children: [
-                              ListTile(
-                                title: Text(countryData['country']),
-                                subtitle: Text(countryData['cases'].toString()),
-                                leading: Image(
-                                    height: 50,
-                                    width: 50,
-                                    image: NetworkImage(
-                                      countryData['countryInfo']['flag'],
-                                    )),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => DetailsScreen(
+                                                name: snapshot.data![index]
+                                                    ['country'],
+                                                image: snapshot.data![index]
+                                                    ['countryInfo']['flag'],
+                                                totalCases: snapshot
+                                                    .data![index]['cases'],
+                                                totalDeaths: snapshot
+                                                    .data![index]['deaths'],
+                                                totalRecovered: snapshot
+                                                    .data![index]['recovered'],
+                                                active: snapshot.data![index]
+                                                    ['active'],
+                                                critical: snapshot.data![index]
+                                                    ['critical'],
+                                                todayRecovered:
+                                                    snapshot.data![index]
+                                                        ['todayRecovered'],
+                                                test: snapshot.data![index]
+                                                    ['tests'],
+                                              )));
+                                },
+                                child: ListTile(
+                                  title: Text(countryData['country']),
+                                  subtitle:
+                                      Text(countryData['cases'].toString()),
+                                  leading: Image(
+                                      height: 50,
+                                      width: 50,
+                                      image: NetworkImage(
+                                        countryData['countryInfo']['flag'],
+                                      )),
+                                ),
                               )
                             ],
                           );
