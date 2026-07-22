@@ -1,5 +1,5 @@
 import 'package:covid_tracker/Model/world_states_model.dart';
-import 'package:covid_tracker/Services/States_Services.dart';
+import 'package:covid_tracker/Services/states_services.dart';
 import 'package:covid_tracker/Services/Utilities/resuseable_row.dart';
 import 'package:covid_tracker/View/countries_list.dart';
 import 'package:flutter/material.dart';
@@ -107,8 +107,16 @@ class _WorldStateScreenState extends State<WorldStateScreen>
                               title: "Deaths",
                               value: data.deaths.toString(),
                             ),
+                            ReuseAbleRow(
+                                title: "Active", value: data.active.toString()),
+                            ReuseAbleRow(
+                                title: "Critical",
+                                value: data.critical.toString()),
+                            ReuseAbleRow(
+                                title: "Today Deaths",
+                                value: data.todayDeaths.toString())
                           ],
-                        ),
+                        ),  
                       ),
                     ),
                     GestureDetector(
